@@ -9,6 +9,8 @@ const {
   mockProductFromModel,
   mockWrongIdFromBD,
   mockWrongIdFromModel,
+  mockInsertIdFromBD,
+  mockModelInsertIdFromModel,
  } = require('../mock/product.mock');
 
 describe('Realizando testes - Products Model', function () {
@@ -40,5 +42,19 @@ describe('Realizando testes - Products Model', function () {
     const product = await productsModel.productsById(inputData);
 
     expect(product).to.be.deep.equal(mockWrongIdFromModel);
+  });
+
+  it('Inserindo um novo produto', async function () {
+    // const [{ insertId }] = mockInsertIdFromBD;
+    sinon.stub(connection, 'execute').resolves(mockInsertIdFromBD);
+    
+    const inputData = {
+      name: 'ProdutoX',
+    };
+
+    const responseProduct = await productsModel.addNewProductModel(inputData);
+    console.log(responseProduct);
+
+    expect(responseProduct).to.be.equal(mockModelInsertIdFromModel);
   });
 });

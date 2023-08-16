@@ -13,7 +13,18 @@ const findProductByIdServ = async (productId) => {
   return { status: 200, data: response };
 };
 
+const addNewProductServ = async (dataNewProduct) => {
+  const insertedId = await productsModel
+    .addNewProductModel(dataNewProduct);
+    console.log(insertedId);
+
+  const newProductAdded = await productsModel.productsById(insertedId);
+
+  return { status: 201, data: newProductAdded };
+};
+
 module.exports = {
   findProductsServ,
   findProductByIdServ,
+  addNewProductServ,
 };

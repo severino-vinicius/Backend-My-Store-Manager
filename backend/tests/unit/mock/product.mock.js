@@ -51,6 +51,36 @@ const mockFromBD = [
     data: mockFromBD,
   };
 
+  const mockFindProductByIdServ = {
+    status: 200,
+    data: mockProductFromBD,
+  };
+
+  const mockDataNewProduct = { id: 5, name: 'ProdutoX' };
+
+  const mockAddNewProductBD = { 
+    status: 201, data: mockDataNewProduct,
+  };
+
+  const mockInsertIdFromBD = [
+    {
+      fieldCount: 0,
+      affectedRows: 1,
+      insertId: 4,
+      info: '',
+      serverStatus: 2,
+      warningStatus: 0,
+    },
+    undefined,
+  ];
+
+  const mockInsertNewProductFromBD = {
+    id: 4,
+    name: 'ProdutoX',
+  };
+
+  const mockModelInsertIdFromModel = 4;
+
   module.exports = {
     mockFromBD,
     mockFromModel,
@@ -59,4 +89,10 @@ const mockFromBD = [
     mockWrongIdFromBD,
     mockWrongIdFromModel,
     mockServiceResBD,
+    mockAddNewProductBD,
+    mockDataNewProduct,
+    mockFindProductByIdServ,
+    mockInsertIdFromBD,
+    mockInsertNewProductFromBD,
+    mockModelInsertIdFromModel,
   };
