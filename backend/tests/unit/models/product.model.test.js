@@ -53,7 +53,6 @@ describe('Realizando testes - Products Model', function () {
     };
 
     const responseProduct = await productsModel.addNewProductModel(inputData);
-    console.log(responseProduct);
 
     expect(responseProduct).to.be.equal(mockModelInsertIdFromModel);
   });

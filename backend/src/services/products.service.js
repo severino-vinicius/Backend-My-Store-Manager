@@ -16,7 +16,6 @@ const findProductByIdServ = async (productId) => {
 const addNewProductServ = async (dataNewProduct) => {
   const insertedId = await productsModel
     .addNewProductModel(dataNewProduct);
-    console.log(insertedId);
 
   const newProductAdded = await productsModel.productsById(insertedId);
 

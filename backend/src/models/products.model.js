@@ -26,9 +26,7 @@ const placeholders = getFormattedPlaceholders(dataNewProduct);
 
 const query = `INSERT INTO products (${columns}) VALUE (${placeholders});`;
 
-const teste = await connection.execute(query, [...Object.values(dataNewProduct)]);
-console.log(teste);
-const [{ insertId }] = teste;
+const [{ insertId }] = await connection.execute(query, [...Object.values(dataNewProduct)]);
 
 return insertId;
 };
