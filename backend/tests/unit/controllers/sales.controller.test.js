@@ -11,7 +11,10 @@ const {
   mockSaleByIdFromBD,
   mockSaleServById,
   mockWrongStatusServ,
-  mockSaleNotFound } = require('../mock/sales.mock');
+  mockSaleNotFound,
+  mockAddNewSaleFromBD,
+  mockAddNewSaleFromModel,
+} = require('../mock/sales.mock');
 
 chai.use(sinonChai);
 
@@ -69,5 +72,31 @@ describe('Realizando testes - Sales Controller', function () {
     await salesController.salesByIdController(req, res);
     expect(res.status).to.have.been.calledWith(404);
     expect(res.json).to.have.been.calledWith(mockSaleNotFound);
+  });
+
+  it('Inserindo uma nova venda', async function () {
+    sinon.stub(salesService, 'addNewSaleProductServ').resolves(mockAddNewSaleFromBD);
+
+    const res = {
+      status: sinon.stub().returnsThis(),
+      json: sinon.stub(),
+    };
+
+    const req = {
+      body: [
+        {
+          productId: 1,
+          quantity: 1,
+        },
+        {
+          productId: 2,
+          quantity: 5,
+        },
+      ],
+    };
+
+    await salesController.addNewSaleProductController(req, res);
+    expect(res.status).to.have.been.calledWith(201);
+    expect(res.json).to.have.been.calledWith(mockAddNewSaleFromModel);
   });
 });

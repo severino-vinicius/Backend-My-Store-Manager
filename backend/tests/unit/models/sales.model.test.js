@@ -1,4 +1,4 @@
-const { expect } = require('chai');
+const { expect, assert } = require('chai');
 const sinon = require('sinon');
 const connection = require('../../../src/models/connection');
 const { salesModel } = require('../../../src/models');
@@ -7,7 +7,8 @@ const {
   mockAllSalesFromModel,
   mockSaleByIdFromBD,
   mockSaleByIdFromModel,
- } = require('../mock/product.mock');
+  mockInsertIdModel,
+ } = require('../mock/sales.mock');
 
 describe('Realizando testes - Sales Model', function () {
   afterEach(function () {
@@ -29,5 +30,33 @@ describe('Realizando testes - Sales Model', function () {
     const product = await salesModel.salesByIdModel(inputData);
 
     expect(product).to.be.deep.equal([mockSaleByIdFromModel]);
+  });
+
+  it('Inserindo uma nova venda', async function () {
+    sinon.stub(connection, 'execute').resolves(mockInsertIdModel);
+
+    const sale = await salesModel.addNewSaleModel();
+
+    expect(sale).to.equal(3);
+  });
+
+  it('Inserindo uma nova venda de produto', async function () {
+    sinon.stub(connection, 'execute').onFirstCall().resolves(null).onSecondCall()
+      .resolves(null);
+
+    const salesId = 3;
+    const inputData = [
+      {
+        productId: 1,
+        quantity: 1,
+      },
+      {
+        productId: 2,
+        quantity: 5,
+      },
+    ];
+    const sale = await salesModel.addNewSaleProductModel(salesId, inputData);
+
+    assert.isOk(sale);
   });
 });

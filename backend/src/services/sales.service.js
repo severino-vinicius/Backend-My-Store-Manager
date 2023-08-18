@@ -15,7 +15,17 @@ const salesByIdService = async (salesId) => {
   return { status: 200, data: response };
 };
 
+const addNewSaleProductServ = async (dataNewSales) => {
+  const saleId = await salesModel.addNewSaleModel();
+  console.log(saleId);
+  await salesModel.addNewSaleProductModel(saleId, dataNewSales);
+
+  const response = { id: saleId, itemsSold: dataNewSales };
+  return { status: 201, data: response };
+};
+
 module.exports = {
   allSalesServ,
   salesByIdService,
+  addNewSaleProductServ,
 };

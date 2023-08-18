@@ -89,6 +89,45 @@ const mockWrongStatusServ = {
   data: mockSaleNotFound,
 };
 
+const mockAddNewSaleFromBD = {
+  status: 201,
+  data: {
+    id: 3,
+    itemsSold: [
+      { productId: 1, quantity: 1 },
+      { productId: 2, quantity: 5 },
+    ],
+  },
+};
+
+const mockAddNewSaleFromModel = {
+    id: 3,
+    itemsSold: [
+      {
+        productId: 1,
+        quantity: 1,
+      },
+      {
+        productId: 2,
+        quantity: 5,
+      },
+    ],
+  };
+
+const mockInsertId = 3;
+
+const mockInsertIdModel = [
+  {
+    fieldCount: 0,
+    affectedRows: 1,
+    insertId: 3,
+    info: '',
+    serverStatus: 2,
+    warningStatus: 0,
+  },
+  undefined,
+];
+
 module.exports = {
   mockAllSalesFromModel,
   mockAllSalesFromBD,
@@ -99,4 +138,8 @@ module.exports = {
   mockWrongStatusServ,
   mockSaleNotFound,
   mockNoIdResolve,
+  mockAddNewSaleFromBD,
+  mockAddNewSaleFromModel,
+  mockInsertId,
+  mockInsertIdModel,
 };

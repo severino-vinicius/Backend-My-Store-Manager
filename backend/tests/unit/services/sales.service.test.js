@@ -9,6 +9,8 @@ const {
   mockSaleByIdFromModel,
   mockNoIdResolve,
   mockSaleNotFound,
+  mockInsertId,
+  mockAddNewSaleFromModel,
  } = require('../mock/sales.mock');
 
 describe('Realizando testes - Sales Service', function () {
@@ -43,5 +45,25 @@ describe('Realizando testes - Sales Service', function () {
     
     expect(responseService.status).to.be.equal(404);
     expect(responseService.data).to.be.deep.equal(mockSaleNotFound);
+  });
+
+  it('Inserindo uma nova venda', async function () {
+    sinon.stub(salesModel, 'addNewSaleModel').resolves(mockInsertId);
+    sinon.stub(salesModel, 'addNewSaleProductModel').resolves(null);
+
+    const inputData = [
+      {
+        productId: 1,
+        quantity: 1,
+      },
+      {
+        productId: 2,
+        quantity: 5,
+      },
+    ];
+
+    const responseService = await salesService.addNewSaleProductServ(inputData);
+    expect(responseService.status).to.be.equal(201);
+    expect(responseService.data).to.be.deep.equal(mockAddNewSaleFromModel);
   });
 });

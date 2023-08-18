@@ -1,5 +1,9 @@
 const camelize = require('camelize');
 const connection = require('./connection');
+// const {
+//   getFormattedColumnNames,
+//   getFormattedPlaceholders,
+// } = require('../utils/generateFormattedQuery');
 
 const allSalesModel = async () => {
   const [sales] = await connection.execute(
@@ -41,7 +45,25 @@ ORDER BY
 return camelize(sales);
 };
 
+const addNewSaleModel = async () => {
+  const queryAddSale = 'INSERT INTO sales (date) VALUE (now());';
+  const [{ insertId }] = await connection.execute(queryAddSale);
+  console.log(insertId);
+  return camelize(insertId);
+};
+
+const addNewSaleProductModel = async (salesId, dataNewSales) => {
+  const query = 'INSERT INTO sales_products (sale_id, product_id, quantity) VALUE (?, ?, ?);';
+  const promise = dataNewSales.map(async (sale) => {
+    await connection.execute(query, [salesId, sale.productId, sale.quantity]);
+  });
+  await Promise.all(promise);
+  return true;
+};
+
 module.exports = {
   allSalesModel,
   salesByIdModel,
+  addNewSaleModel,
+  addNewSaleProductModel,
 };
