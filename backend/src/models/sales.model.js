@@ -48,7 +48,6 @@ return camelize(sales);
 const addNewSaleModel = async () => {
   const queryAddSale = 'INSERT INTO sales (date) VALUE (now());';
   const [{ insertId }] = await connection.execute(queryAddSale);
-  console.log(insertId);
   return camelize(insertId);
 };
 

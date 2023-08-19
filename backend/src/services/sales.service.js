@@ -1,4 +1,4 @@
-const { salesModel } = require('../models');
+const { salesModel, productsModel } = require('../models');
 
 const allSalesServ = async () => {
   const response = await salesModel.allSalesModel();
@@ -16,8 +16,17 @@ const salesByIdService = async (salesId) => {
 };
 
 const addNewSaleProductServ = async (dataNewSales) => {
+  const checkProductId = dataNewSales.map(({ productId }) => {
+    const responseProduct = productsModel.productsById(productId);
+    return responseProduct;
+  });
+  const responsePromise = await Promise.all(checkProductId);
+  const validateProductId = responsePromise.some((product) => product === undefined);
+  if (validateProductId) {
+    return { status: 404, data: { message: 'Product not found' } };
+  }
   const saleId = await salesModel.addNewSaleModel();
-  console.log(saleId);
+
   await salesModel.addNewSaleProductModel(saleId, dataNewSales);
 
   const response = { id: saleId, itemsSold: dataNewSales };

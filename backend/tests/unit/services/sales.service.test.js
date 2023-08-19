@@ -1,7 +1,7 @@
 const { expect } = require('chai');
 const sinon = require('sinon');
 const { salesService } = require('../../../src/services');
-const { salesModel } = require('../../../src/models');
+const { salesModel, productsModel } = require('../../../src/models');
 const {
   mockAllSalesFromBD,
   mockAllSalesFromModel,
@@ -48,6 +48,8 @@ describe('Realizando testes - Sales Service', function () {
   });
 
   it('Inserindo uma nova venda', async function () {
+    sinon.stub(productsModel, 'productsById').onFirstCall().resolves(null).onSecondCall()
+      .resolves(null);
     sinon.stub(salesModel, 'addNewSaleModel').resolves(mockInsertId);
     sinon.stub(salesModel, 'addNewSaleProductModel').resolves(null);
 
