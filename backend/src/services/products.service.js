@@ -22,8 +22,21 @@ const addNewProductServ = async (dataNewProduct) => {
   return { status: 201, data: newProductAdded };
 };
 
+const updateByIdServ = async (productData, productId) => {
+  const validateProductId = await productsModel.productsById(productId);
+  if (!validateProductId) {
+    return { status: 404, data: { message: 'Product not found' } };
+  }
+  await productsModel.updateByIdModel(productData, productId);
+  
+  const productUpdated = await productsModel.productsById(productId);
+
+  return { status: 200, data: productUpdated };
+};
+
 module.exports = {
   findProductsServ,
   findProductByIdServ,
   addNewProductServ,
+  updateByIdServ,
 };

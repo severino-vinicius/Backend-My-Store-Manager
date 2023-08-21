@@ -17,8 +17,17 @@ const addNewProductController = async (req, res) => {
   return res.status(status).json(data);
 };
 
+const updateByIdController = async (req, res) => {
+  const productData = req.body;
+  const { productId } = req.params;
+
+  const { status, data } = await productsService.updateByIdServ(productData, productId);
+  return res.status(status).json(data);
+};
+
 module.exports = {
   findAllProducts,
   findProductById,
   addNewProductController,
+  updateByIdController,
 };

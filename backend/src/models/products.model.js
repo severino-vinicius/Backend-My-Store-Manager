@@ -31,8 +31,17 @@ const [{ insertId }] = await connection.execute(query, [...Object.values(dataNew
 return insertId;
 };
 
+const updateByIdModel = async (productData, productId) => {
+const query = 'UPDATE products SET name = ? WHERE id = ?;';
+
+const [{ affectedRows }] = await connection.execute(query, [productData.name, productId]);
+
+return affectedRows;
+};
+
 module.exports = {
   allProducts,
   productsById,
   addNewProductModel,
+  updateByIdModel,
 };

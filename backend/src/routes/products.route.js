@@ -7,4 +7,6 @@ route.get('/:productId', productsController.findProductById);
 
 route.post('/', checkName, productsController.addNewProductController);
 
+route.put('/:productId', checkName, productsController.updateByIdController);
+
 module.exports = route;
